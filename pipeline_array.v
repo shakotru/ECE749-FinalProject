@@ -1,38 +1,45 @@
 module pipeline_array #(
     parameter NUM_PIPELINES = 4,
-    parameter WIDTH = 32
+    parameter WIDTH = 32,
+    parameter IDX_WIDTH = 4
 )(
     input clk,
     input rst,
+    input  [NUM_PIPELINES-1:0]           valid_in,
+    input  [NUM_PIPELINES*WIDTH-1:0]     xi,
+    input  [NUM_PIPELINES*WIDTH-1:0]     yi,
+    input  [NUM_PIPELINES*WIDTH-1:0]     xj,
+    input  [NUM_PIPELINES*WIDTH-1:0]     yj,
+    input  [NUM_PIPELINES*IDX_WIDTH-1:0] i_bus,
+    input  [NUM_PIPELINES*IDX_WIDTH-1:0] j_bus,
 
-    input [NUM_PIPELINES-1:0] valid_in,
-    input [NUM_PIPELINES*WIDTH-1:0] xi,
-    input [NUM_PIPELINES*WIDTH-1:0] yi,
-    input [NUM_PIPELINES*WIDTH-1:0] xj,
-    input [NUM_PIPELINES*WIDTH-1:0] yj,
-
-    output [NUM_PIPELINES-1:0] valid_out,
-    output [NUM_PIPELINES*WIDTH-1:0] force_out
+    output [NUM_PIPELINES-1:0]           valid_out,
+    output [NUM_PIPELINES*WIDTH-1:0]     force_out,
+    output [NUM_PIPELINES*IDX_WIDTH-1:0] out_i_bus,
+    output [NUM_PIPELINES*IDX_WIDTH-1:0] out_j_bus
 );
 
-genvar k;
+genvar p;
 generate
-    for (k = 0; k < NUM_PIPELINES; k = k + 1) begin : PIPELINES
-
-        force_pipeline #(.WIDTH(WIDTH)) fp (
+    for (p = 0; p < NUM_PIPELINES; p = p + 1) begin : GEN_PIPE
+        force_pipeline #(
+            .WIDTH(WIDTH),
+            .IDX_WIDTH(IDX_WIDTH)
+        ) fp (
             .clk(clk),
             .rst(rst),
-
-            .valid_in(valid_in[k]),
-            .xi(xi[k*WIDTH +: WIDTH]),
-            .yi(yi[k*WIDTH +: WIDTH]),
-            .xj(xj[k*WIDTH +: WIDTH]),
-            .yj(yj[k*WIDTH +: WIDTH]),
-
-            .valid_out(valid_out[k]),
-            .force_out(force_out[k*WIDTH +: WIDTH])
+            .valid_in(valid_in[p]),
+            .xi(xi[p*WIDTH +: WIDTH]),
+            .yi(yi[p*WIDTH +: WIDTH]),
+            .xj(xj[p*WIDTH +: WIDTH]),
+            .yj(yj[p*WIDTH +: WIDTH]),
+            .i_in(i_bus[p*IDX_WIDTH +: IDX_WIDTH]),
+            .j_in(j_bus[p*IDX_WIDTH +: IDX_WIDTH]),
+            .valid_out(valid_out[p]),
+            .force_out(force_out[p*WIDTH +: WIDTH]),
+            .i_out(out_i_bus[p*IDX_WIDTH +: IDX_WIDTH]),
+            .j_out(out_j_bus[p*IDX_WIDTH +: IDX_WIDTH])
         );
-
     end
 endgenerate
 

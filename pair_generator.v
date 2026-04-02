@@ -4,7 +4,7 @@ module pair_generator #(
 )(
     input clk,
     input rst,
-    input enable,  // start computation
+    input enable,
 
     output reg valid_out,
     output reg [$clog2(N)-1:0] i_out,
@@ -13,37 +13,34 @@ module pair_generator #(
 );
 
 reg [$clog2(N)-1:0] i, j;
-reg computing;  // NEW: state machine
+reg computing;
 
 always @(posedge clk) begin
     if (rst) begin
-        i <= 0;
-        j <= 1;
+        i         <= 0;
+        j         <= 1;
+        i_out     <= 0;
+        j_out     <= 1;
         valid_out <= 0;
-        done <= 0;
+        done      <= 0;
         computing <= 0;
     end else begin
         valid_out <= 0;
-        
+        done      <= 0;
+
         if (enable && !computing) begin
-            // Start new computation
             computing <= 1;
-            done <= 0;
             i <= 0;
             j <= 1;
-            valid_out <= 1;
-            i_out <= 0;
-            j_out <= 1;
         end else if (computing) begin
-            // Continue generating pairs
             valid_out <= 1;
-            
+            i_out <= i;
+            j_out <= j;
+
             if (j == N-1) begin
                 if (i == N-2) begin
-                    // Last pair done
                     computing <= 0;
-                    done <= 1;
-                    valid_out <= 0;
+                    done <= 1;   // last pair is being issued this cycle
                 end else begin
                     i <= i + 1;
                     j <= i + 2;
@@ -51,9 +48,6 @@ always @(posedge clk) begin
             end else begin
                 j <= j + 1;
             end
-            
-            i_out <= i;
-            j_out <= j;
         end
     end
 end

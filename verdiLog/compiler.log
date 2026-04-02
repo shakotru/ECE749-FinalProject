@@ -1,0 +1,15 @@
+*design* DebussyLib (btIdent Verdi_S-2021.09-SP1-1)
+Command arguments:
+    +define+verilog
+    -f rtl_01.f
+        ./tb_md_top.v
+        ./md_top.v
+        ./pipeline_array.v
+        ./pair_generator.v
+        ./force_pipeline.v
+        ./dispatcher.v
+
+Highest level modules:
+tb_md_top
+
+Total	0 error(s),   0 warning(s)

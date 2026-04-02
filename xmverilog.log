@@ -1,0 +1,341 @@
+xmverilog(64): 24.03-s013: (c) Copyright 1995-2025 Cadence Design Systems, Inc.
+TOOL:	xmverilog	24.03-s013: Started on Apr 02, 2026 at 01:11:17 EDT
+ncverilog
+	-f rtl_01.f
+		./tb_md_top.v
+		./md_top.v
+		./pipeline_array.v
+		./pair_generator.v
+		./force_pipeline.v
+		./dispatcher.v
+	+notimingchecks
+	+access+r
+	+define+tb3
+xmverilog: *W,NCEXDEP: Executable (ncverilog) is deprecated. Use (xmverilog) instead.
+Recompiling... reason: file './dispatcher.v' is newer than expected.
+	expected: Wed Apr  1 01:23:57 2026
+	actual:   Thu Apr  2 00:54:54 2026
+file: ./tb_md_top.v
+	module worklib.tb_md_top:v
+		errors: 0, warnings: 0
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.force_pipeline:v <0x001fab24>
+			streams:   4, words:  5563
+		worklib.dispatcher:v <0x1e4be750>
+			streams:   7, words:  7886
+		worklib.pair_generator:v <0x66875f34>
+			streams:   8, words:  3620
+		worklib.md_top:v <0x30aea3d6>
+			streams:   8, words:  3304
+		worklib.tb_md_top:v <0x1d29ace9>
+			streams:  10, words: 31601
+		worklib.pipeline_array:v <0x040c2ca0>
+			streams:   6, words:  1549
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		                 Instances  Unique
+		Modules:                 9       6
+		Registers:             120      69
+		Scalar wires:           10       -
+		Expanded wires:        164      13
+		Vectored wires:         36       -
+		Always blocks:          11       8
+		Initial blocks:          9       6
+		Cont. assignments:       4       5
+		Pseudo assignments:     27       -
+		Process Clocks:          7       1
+		Simulation timescale:  1ps
+	Writing initial simulation snapshot: worklib.tb_md_top:v
+Loading snapshot worklib.tb_md_top:v .................... Done
+xcelium> source /CMC/tools/cadence/XCELIUMMAIN24.03.013_lnx86/tools/xcelium/files/xmsimrc
+xcelium> run
+[TB] Loaded particle positions:
+  particle[0]: x=0x00000000  y=0x00000000
+  particle[1]: x=0x0000000a  y=0x00000005
+  particle[2]: x=0x00000014  y=0x0000000a
+  particle[3]: x=0x0000001e  y=0x0000000f
+  particle[4]: x=0x00000028  y=0x00000014
+  particle[5]: x=0x00000032  y=0x00000019
+  particle[6]: x=0x0000003c  y=0x0000001e
+  particle[7]: x=0x00000046  y=0x00000023
+  particle[8]: x=0x00000050  y=0x00000028
+  particle[9]: x=0x0000005a  y=0x0000002d
+  particle[10]: x=0x00000064  y=0x00000032
+  particle[11]: x=0x0000006e  y=0x00000037
+  particle[12]: x=0x00000078  y=0x0000003c
+  particle[13]: x=0x00000082  y=0x00000041
+  particle[14]: x=0x0000008c  y=0x00000046
+  particle[15]: x=0x00000096  y=0x0000004b
+[GOLDEN] Loaded 120 golden entries
+[TB] Cycle 0: rst=1 start=0 done=x
+[DUT] rst=1 start=0 done=x cycle=0
+[DUT] rst=1 start=0 done=0 cycle=1
+[TB] Cycle 2: rst=0 start=0 done=0
+[DUT] rst=0 start=0 done=0 cycle=2
+[TB] Cycle 3: start=1 done=0
+[DUT] rst=0 start=1 done=0 cycle=3
+[TB] Cycle 4: start=0
+[DUT] rst=0 start=0 done=0 cycle=4
+[DUT] rst=0 start=0 done=0 cycle=5
+[DUT] rst=0 start=0 done=0 cycle=6
+[DUT] rst=0 start=0 done=0 cycle=7
+[DUT] rst=0 start=0 done=0 cycle=8
+[DUT] rst=0 start=0 done=0 cycle=9
+[MISMATCH] pair=(0,1) lane=0 expected=0x00000000 got=0x01b4e81b
+[DUT] rst=0 start=0 done=0 cycle=10
+[MISMATCH] pair=(0,2) lane=1 expected=0x00000000 got=0x0057619f
+[DUT] rst=0 start=0 done=0 cycle=11
+[MISMATCH] pair=(0,3) lane=2 expected=0x00000000 got=0x002572fb
+[DUT] rst=0 start=0 done=0 cycle=12
+[MISMATCH] pair=(0,4) lane=3 expected=0x00000000 got=0x00152401
+[DUT] rst=0 start=0 done=0 cycle=13
+[MISMATCH] pair=(0,5) lane=0 expected=0x00000000 got=0x000d8338
+[DUT] rst=0 start=0 done=0 cycle=14
+[MISMATCH] pair=(0,6) lane=1 expected=0x00000000 got=0x00095cbe
+[DUT] rst=0 start=0 done=0 cycle=15
+[MISMATCH] pair=(0,7) lane=2 expected=0x00000000 got=0x0006dcc6
+[DUT] rst=0 start=0 done=0 cycle=16
+[MISMATCH] pair=(0,8) lane=3 expected=0x00000000 got=0x00053e2d
+[DUT] rst=0 start=0 done=0 cycle=17
+[MISMATCH] pair=(0,9) lane=0 expected=0x00000000 got=0x000425d9
+[DUT] rst=0 start=0 done=0 cycle=18
+[MISMATCH] pair=(0,10) lane=1 expected=0x00000000 got=0x00035c5e
+[DUT] rst=0 start=0 done=0 cycle=19
+[MISMATCH] pair=(0,11) lane=2 expected=0x00000000 got=0x0002c6e6
+[DUT] rst=0 start=0 done=0 cycle=20
+[MISMATCH] pair=(0,12) lane=3 expected=0x00000000 got=0x0002550d
+[DUT] rst=0 start=0 done=0 cycle=21
+[MISMATCH] pair=(0,13) lane=0 expected=0x00000000 got=0x0001fc66
+[DUT] rst=0 start=0 done=0 cycle=22
+[MISMATCH] pair=(0,14) lane=1 expected=0x00000000 got=0x0001b69e
+[DUT] rst=0 start=0 done=0 cycle=23
+[MISMATCH] pair=(0,15) lane=2 expected=0x00000000 got=0x00017e2b
+[DUT] rst=0 start=0 done=0 cycle=24
+[MISMATCH] pair=(1,2) lane=3 expected=0x00000000 got=0x01b4e81b
+[DUT] rst=0 start=0 done=0 cycle=25
+[MISMATCH] pair=(1,3) lane=0 expected=0x00000000 got=0x0057619f
+[DUT] rst=0 start=0 done=0 cycle=26
+[MISMATCH] pair=(1,4) lane=1 expected=0x00000000 got=0x002572fb
+[DUT] rst=0 start=0 done=0 cycle=27
+[MISMATCH] pair=(1,5) lane=2 expected=0x00000000 got=0x00152401
+[DUT] rst=0 start=0 done=0 cycle=28
+[MISMATCH] pair=(1,6) lane=3 expected=0x00000000 got=0x000d8338
+[DUT] rst=0 start=0 done=0 cycle=29
+[MISMATCH] pair=(1,7) lane=0 expected=0x00000000 got=0x00095cbe
+[DUT] rst=0 start=0 done=0 cycle=30
+[MISMATCH] pair=(1,8) lane=1 expected=0x00000000 got=0x0006dcc6
+[DUT] rst=0 start=0 done=0 cycle=31
+[MISMATCH] pair=(1,9) lane=2 expected=0x00000000 got=0x00053e2d
+[DUT] rst=0 start=0 done=0 cycle=32
+[MISMATCH] pair=(1,10) lane=3 expected=0x00000000 got=0x000425d9
+[DUT] rst=0 start=0 done=0 cycle=33
+[MISMATCH] pair=(1,11) lane=0 expected=0x00000000 got=0x00035c5e
+[DUT] rst=0 start=0 done=0 cycle=34
+[MISMATCH] pair=(1,12) lane=1 expected=0x00000000 got=0x0002c6e6
+[DUT] rst=0 start=0 done=0 cycle=35
+[MISMATCH] pair=(1,13) lane=2 expected=0x00000000 got=0x0002550d
+[DUT] rst=0 start=0 done=0 cycle=36
+[MISMATCH] pair=(1,14) lane=3 expected=0x00000000 got=0x0001fc66
+[DUT] rst=0 start=0 done=0 cycle=37
+[MISMATCH] pair=(1,15) lane=0 expected=0x00000000 got=0x0001b69e
+[DUT] rst=0 start=0 done=0 cycle=38
+[MISMATCH] pair=(2,3) lane=1 expected=0x00000000 got=0x01b4e81b
+[DUT] rst=0 start=0 done=0 cycle=39
+[MISMATCH] pair=(2,4) lane=2 expected=0x00000000 got=0x0057619f
+[DUT] rst=0 start=0 done=0 cycle=40
+[MISMATCH] pair=(2,5) lane=3 expected=0x00000000 got=0x002572fb
+[DUT] rst=0 start=0 done=0 cycle=41
+[MISMATCH] pair=(2,6) lane=0 expected=0x00000000 got=0x00152401
+[DUT] rst=0 start=0 done=0 cycle=42
+[MISMATCH] pair=(2,7) lane=1 expected=0x00000000 got=0x000d8338
+[DUT] rst=0 start=0 done=0 cycle=43
+[MISMATCH] pair=(2,8) lane=2 expected=0x00000000 got=0x00095cbe
+[DUT] rst=0 start=0 done=0 cycle=44
+[MISMATCH] pair=(2,9) lane=3 expected=0x00000000 got=0x0006dcc6
+[DUT] rst=0 start=0 done=0 cycle=45
+[MISMATCH] pair=(2,10) lane=0 expected=0x00000000 got=0x00053e2d
+[DUT] rst=0 start=0 done=0 cycle=46
+[MISMATCH] pair=(2,11) lane=1 expected=0x00000000 got=0x000425d9
+[DUT] rst=0 start=0 done=0 cycle=47
+[MISMATCH] pair=(2,12) lane=2 expected=0x00000000 got=0x00035c5e
+[DUT] rst=0 start=0 done=0 cycle=48
+[MISMATCH] pair=(2,13) lane=3 expected=0x00000000 got=0x0002c6e6
+[DUT] rst=0 start=0 done=0 cycle=49
+[MISMATCH] pair=(2,14) lane=0 expected=0x00000000 got=0x0002550d
+[DUT] rst=0 start=0 done=0 cycle=50
+[MISMATCH] pair=(2,15) lane=1 expected=0x00000000 got=0x0001fc66
+[DUT] rst=0 start=0 done=0 cycle=51
+[MISMATCH] pair=(3,4) lane=2 expected=0x00000000 got=0x01b4e81b
+[DUT] rst=0 start=0 done=0 cycle=52
+[MISMATCH] pair=(3,5) lane=3 expected=0x00000000 got=0x0057619f
+[DUT] rst=0 start=0 done=0 cycle=53
+[MISMATCH] pair=(3,6) lane=0 expected=0x00000000 got=0x002572fb
+[DUT] rst=0 start=0 done=0 cycle=54
+[MISMATCH] pair=(3,7) lane=1 expected=0x00000000 got=0x00152401
+[DUT] rst=0 start=0 done=0 cycle=55
+[MISMATCH] pair=(3,8) lane=2 expected=0x00000000 got=0x000d8338
+[DUT] rst=0 start=0 done=0 cycle=56
+[MISMATCH] pair=(3,9) lane=3 expected=0x00000000 got=0x00095cbe
+[DUT] rst=0 start=0 done=0 cycle=57
+[MISMATCH] pair=(3,10) lane=0 expected=0x00000000 got=0x0006dcc6
+[DUT] rst=0 start=0 done=0 cycle=58
+[MISMATCH] pair=(3,11) lane=1 expected=0x00000000 got=0x00053e2d
+[DUT] rst=0 start=0 done=0 cycle=59
+[MISMATCH] pair=(3,12) lane=2 expected=0x00000000 got=0x000425d9
+[DUT] rst=0 start=0 done=0 cycle=60
+[MISMATCH] pair=(3,13) lane=3 expected=0x00000000 got=0x00035c5e
+[DUT] rst=0 start=0 done=0 cycle=61
+[MISMATCH] pair=(3,14) lane=0 expected=0x00000000 got=0x0002c6e6
+[DUT] rst=0 start=0 done=0 cycle=62
+[MISMATCH] pair=(3,15) lane=1 expected=0x00000000 got=0x0002550d
+[DUT] rst=0 start=0 done=0 cycle=63
+[MISMATCH] pair=(4,5) lane=2 expected=0x00000000 got=0x01b4e81b
+[DUT] rst=0 start=0 done=0 cycle=64
+[MISMATCH] pair=(4,6) lane=3 expected=0x00000000 got=0x0057619f
+[DUT] rst=0 start=0 done=0 cycle=65
+[MISMATCH] pair=(4,7) lane=0 expected=0x00000000 got=0x002572fb
+[DUT] rst=0 start=0 done=0 cycle=66
+[MISMATCH] pair=(4,8) lane=1 expected=0x00000000 got=0x00152401
+[DUT] rst=0 start=0 done=0 cycle=67
+[MISMATCH] pair=(4,9) lane=2 expected=0x00000000 got=0x000d8338
+[DUT] rst=0 start=0 done=0 cycle=68
+[MISMATCH] pair=(4,10) lane=3 expected=0x00000000 got=0x00095cbe
+[DUT] rst=0 start=0 done=0 cycle=69
+[MISMATCH] pair=(4,11) lane=0 expected=0x00000000 got=0x0006dcc6
+[DUT] rst=0 start=0 done=0 cycle=70
+[MISMATCH] pair=(4,12) lane=1 expected=0x00000000 got=0x00053e2d
+[DUT] rst=0 start=0 done=0 cycle=71
+[MISMATCH] pair=(4,13) lane=2 expected=0x00000000 got=0x000425d9
+[DUT] rst=0 start=0 done=0 cycle=72
+[MISMATCH] pair=(4,14) lane=3 expected=0x00000000 got=0x00035c5e
+[DUT] rst=0 start=0 done=0 cycle=73
+[MISMATCH] pair=(4,15) lane=0 expected=0x00000000 got=0x0002c6e6
+[DUT] rst=0 start=0 done=0 cycle=74
+[MISMATCH] pair=(5,6) lane=1 expected=0x00000000 got=0x01b4e81b
+[DUT] rst=0 start=0 done=0 cycle=75
+[MISMATCH] pair=(5,7) lane=2 expected=0x00000000 got=0x0057619f
+[DUT] rst=0 start=0 done=0 cycle=76
+[MISMATCH] pair=(5,8) lane=3 expected=0x00000000 got=0x002572fb
+[DUT] rst=0 start=0 done=0 cycle=77
+[MISMATCH] pair=(5,9) lane=0 expected=0x00000000 got=0x00152401
+[DUT] rst=0 start=0 done=0 cycle=78
+[MISMATCH] pair=(5,10) lane=1 expected=0x00000000 got=0x000d8338
+[DUT] rst=0 start=0 done=0 cycle=79
+[MISMATCH] pair=(5,11) lane=2 expected=0x00000000 got=0x00095cbe
+[DUT] rst=0 start=0 done=0 cycle=80
+[MISMATCH] pair=(5,12) lane=3 expected=0x00000000 got=0x0006dcc6
+[DUT] rst=0 start=0 done=0 cycle=81
+[MISMATCH] pair=(5,13) lane=0 expected=0x00000000 got=0x00053e2d
+[DUT] rst=0 start=0 done=0 cycle=82
+[MISMATCH] pair=(5,14) lane=1 expected=0x00000000 got=0x000425d9
+[DUT] rst=0 start=0 done=0 cycle=83
+[MISMATCH] pair=(5,15) lane=2 expected=0x00000000 got=0x00035c5e
+[DUT] rst=0 start=0 done=0 cycle=84
+[MISMATCH] pair=(6,7) lane=3 expected=0x00000000 got=0x01b4e81b
+[DUT] rst=0 start=0 done=0 cycle=85
+[MISMATCH] pair=(6,8) lane=0 expected=0x00000000 got=0x0057619f
+[DUT] rst=0 start=0 done=0 cycle=86
+[MISMATCH] pair=(6,9) lane=1 expected=0x00000000 got=0x002572fb
+[DUT] rst=0 start=0 done=0 cycle=87
+[MISMATCH] pair=(6,10) lane=2 expected=0x00000000 got=0x00152401
+[DUT] rst=0 start=0 done=0 cycle=88
+[MISMATCH] pair=(6,11) lane=3 expected=0x00000000 got=0x000d8338
+[DUT] rst=0 start=0 done=0 cycle=89
+[MISMATCH] pair=(6,12) lane=0 expected=0x00000000 got=0x00095cbe
+[DUT] rst=0 start=0 done=0 cycle=90
+[MISMATCH] pair=(6,13) lane=1 expected=0x00000000 got=0x0006dcc6
+[DUT] rst=0 start=0 done=0 cycle=91
+[MISMATCH] pair=(6,14) lane=2 expected=0x00000000 got=0x00053e2d
+[DUT] rst=0 start=0 done=0 cycle=92
+[MISMATCH] pair=(6,15) lane=3 expected=0x00000000 got=0x000425d9
+[DUT] rst=0 start=0 done=0 cycle=93
+[MISMATCH] pair=(7,8) lane=0 expected=0x00000000 got=0x01b4e81b
+[DUT] rst=0 start=0 done=0 cycle=94
+[MISMATCH] pair=(7,9) lane=1 expected=0x00000000 got=0x0057619f
+[DUT] rst=0 start=0 done=0 cycle=95
+[MISMATCH] pair=(7,10) lane=2 expected=0x00000000 got=0x002572fb
+[DUT] rst=0 start=0 done=0 cycle=96
+[MISMATCH] pair=(7,11) lane=3 expected=0x00000000 got=0x00152401
+[DUT] rst=0 start=0 done=0 cycle=97
+[MISMATCH] pair=(7,12) lane=0 expected=0x00000000 got=0x000d8338
+[DUT] rst=0 start=0 done=0 cycle=98
+[MISMATCH] pair=(7,13) lane=1 expected=0x00000000 got=0x00095cbe
+[DUT] rst=0 start=0 done=0 cycle=99
+[MISMATCH] pair=(7,14) lane=2 expected=0x00000000 got=0x0006dcc6
+[DUT] rst=0 start=0 done=0 cycle=100
+[MISMATCH] pair=(7,15) lane=3 expected=0x00000000 got=0x00053e2d
+[DUT] rst=0 start=0 done=0 cycle=101
+[MISMATCH] pair=(8,9) lane=0 expected=0x00000000 got=0x01b4e81b
+[DUT] rst=0 start=0 done=0 cycle=102
+[MISMATCH] pair=(8,10) lane=1 expected=0x00000000 got=0x0057619f
+[DUT] rst=0 start=0 done=0 cycle=103
+[MISMATCH] pair=(8,11) lane=2 expected=0x00000000 got=0x002572fb
+[DUT] rst=0 start=0 done=0 cycle=104
+[MISMATCH] pair=(8,12) lane=3 expected=0x00000000 got=0x00152401
+[DUT] rst=0 start=0 done=0 cycle=105
+[MISMATCH] pair=(8,13) lane=0 expected=0x00000000 got=0x000d8338
+[DUT] rst=0 start=0 done=0 cycle=106
+[MISMATCH] pair=(8,14) lane=1 expected=0x00000000 got=0x00095cbe
+[DUT] rst=0 start=0 done=0 cycle=107
+[MISMATCH] pair=(8,15) lane=2 expected=0x00000000 got=0x0006dcc6
+[DUT] rst=0 start=0 done=0 cycle=108
+[MISMATCH] pair=(9,10) lane=3 expected=0x00000000 got=0x01b4e81b
+[DUT] rst=0 start=0 done=0 cycle=109
+[MISMATCH] pair=(9,11) lane=0 expected=0x00000000 got=0x0057619f
+[DUT] rst=0 start=0 done=0 cycle=110
+[MISMATCH] pair=(9,12) lane=1 expected=0x00000000 got=0x002572fb
+[DUT] rst=0 start=0 done=0 cycle=111
+[MISMATCH] pair=(9,13) lane=2 expected=0x00000000 got=0x00152401
+[DUT] rst=0 start=0 done=0 cycle=112
+[MISMATCH] pair=(9,14) lane=3 expected=0x00000000 got=0x000d8338
+[DUT] rst=0 start=0 done=0 cycle=113
+[MISMATCH] pair=(9,15) lane=0 expected=0x00000000 got=0x00095cbe
+[DUT] rst=0 start=0 done=0 cycle=114
+[MISMATCH] pair=(10,11) lane=1 expected=0x00000000 got=0x01b4e81b
+[DUT] rst=0 start=0 done=0 cycle=115
+[MISMATCH] pair=(10,12) lane=2 expected=0x00000000 got=0x0057619f
+[DUT] rst=0 start=0 done=0 cycle=116
+[MISMATCH] pair=(10,13) lane=3 expected=0x00000000 got=0x002572fb
+[DUT] rst=0 start=0 done=0 cycle=117
+[MISMATCH] pair=(10,14) lane=0 expected=0x00000000 got=0x00152401
+[DUT] rst=0 start=0 done=0 cycle=118
+[MISMATCH] pair=(10,15) lane=1 expected=0x00000000 got=0x000d8338
+[DUT] rst=0 start=0 done=0 cycle=119
+[MISMATCH] pair=(11,12) lane=2 expected=0x00000000 got=0x01b4e81b
+[DUT] rst=0 start=0 done=0 cycle=120
+[MISMATCH] pair=(11,13) lane=3 expected=0x00000000 got=0x0057619f
+[DUT] rst=0 start=0 done=0 cycle=121
+[MISMATCH] pair=(11,14) lane=0 expected=0x00000000 got=0x002572fb
+[DUT] rst=0 start=0 done=0 cycle=122
+[MISMATCH] pair=(11,15) lane=1 expected=0x00000000 got=0x00152401
+[DUT] rst=0 start=0 done=0 cycle=123
+[MISMATCH] pair=(12,13) lane=2 expected=0x00000000 got=0x01b4e81b
+[DUT] rst=0 start=0 done=1 cycle=124
+[MISMATCH] pair=(12,14) lane=3 expected=0x00000000 got=0x0057619f
+[DUT] rst=0 start=0 done=0 cycle=125
+[MISMATCH] pair=(12,15) lane=0 expected=0x00000000 got=0x002572fb
+[DUT] rst=0 start=0 done=0 cycle=126
+[MISMATCH] pair=(13,14) lane=1 expected=0x00000000 got=0x01b4e81b
+[DUT] rst=0 start=0 done=0 cycle=127
+[MISMATCH] pair=(13,15) lane=2 expected=0x00000000 got=0x0057619f
+[DUT] rst=0 start=0 done=0 cycle=128
+[MISMATCH] pair=(14,15) lane=3 expected=0x00000000 got=0x01b4e81b
+=======================================
+MDGRAPE-STYLE SIMULATION RESULTS
+N                        = 16
+Pipelines                = 4
+Total pairs              = 120
+Total cycles             = 125
+Throughput (pairs/cycle) = 0.960000
+Done                     = 0
+=======================================
+*** ALL 120 PAIRS CHECKED ***
+[DUT] rst=0 start=0 done=0 cycle=129
+Simulation complete via $finish(1) at time 1305 NS + 0
+./tb_md_top.v:295     $finish;
+xcelium> exit
+TOOL:	xmverilog	24.03-s013: Exiting on Apr 02, 2026 at 01:11:19 EDT  (total: 00:00:02)

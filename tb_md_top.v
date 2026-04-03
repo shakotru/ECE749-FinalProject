@@ -117,8 +117,8 @@ end
 //////////////////////////////////////////////////
 
 initial begin
-    $readmemh("./00_testbed/p0/positions_x.txt", pos_x);
-    $readmemh("./00_testbed/p0/positions_y.txt", pos_y);
+    $readmemh("./00_testbed/current/positions_x.txt", pos_x);
+    $readmemh("./00_testbed/current/positions_y.txt", pos_y);
 
     $display("[TB] Loaded particle positions:");
     for (p = 0; p < N; p = p + 1) begin
@@ -143,7 +143,7 @@ initial begin
         golden_seen[load_k]  = 1'b0;
     end
 
-    golden_file = $fopen("./00_testbed/p0/golden_forces.txt", "r");
+    golden_file = $fopen("./00_testbed/current/golden_forces.txt", "r");
     if (golden_file == 0) begin
         $display("[ERROR] Cannot open golden_forces.txt");
         $finish;

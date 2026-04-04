@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 
 module md_top #(
     parameter N = 16,
@@ -13,18 +14,27 @@ module md_top #(
     output [NUM_PIPELINES-1:0]           pipe_valid_out,
     output [NUM_PIPELINES*WIDTH-1:0]     force_out_bus,
     output [NUM_PIPELINES*IDX_WIDTH-1:0] out_i_bus,
-    output [NUM_PIPELINES*IDX_WIDTH-1:0] out_j_bus
+    output [NUM_PIPELINES*IDX_WIDTH-1:0] out_j_bus,
+    output [NUM_PIPELINES-1:0]           overflow_out
 );
 
-// 1. Unsigned position memory
+// 1. Position memory loaded from external files
 reg [WIDTH-1:0] pos_x [0:N-1];
 reg [WIDTH-1:0] pos_y [0:N-1];
 
 integer idx;
 initial begin
     for (idx = 0; idx < N; idx = idx + 1) begin
-        pos_x[idx] = idx * 10;
-        pos_y[idx] = idx * 5;
+        pos_x[idx] = {WIDTH{1'b0}};
+        pos_y[idx] = {WIDTH{1'b0}};
+    end
+
+    $readmemh("./00_testbed/current/positions_x.txt", pos_x);
+    $readmemh("./00_testbed/current/positions_y.txt", pos_y);
+
+    $display("[MD_TOP] Loaded particle positions:");
+    for (idx = 0; idx < N; idx = idx + 1) begin
+        $display("  particle[%0d]: x=0x%h  y=0x%h", idx, pos_x[idx], pos_y[idx]);
     end
 end
 
@@ -101,7 +111,8 @@ pipeline_array #(
     .valid_out(pipe_valid_out),
     .force_out(force_out_bus),
     .out_i_bus(out_i_bus),
-    .out_j_bus(out_j_bus)
+    .out_j_bus(out_j_bus),
+    .overflow_out(overflow_out)
 );
 
 // 6. Interaction counter

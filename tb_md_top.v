@@ -26,6 +26,7 @@ wire [NUM_PIPELINES-1:0]           pipe_valid;
 wire [NUM_PIPELINES*WIDTH-1:0]     force_out_bus;
 wire [NUM_PIPELINES*IDX_WIDTH-1:0] out_i_bus;
 wire [NUM_PIPELINES*IDX_WIDTH-1:0] out_j_bus;
+wire [NUM_PIPELINES-1:0]           overflow_bus;
 
 integer total_cycles;
 integer total_pairs;
@@ -33,6 +34,12 @@ integer cycle_count;
 integer start_cycle;
 integer end_cycle;
 integer timeout_count;
+
+integer pass_count;
+integer mismatch_count;
+integer missing_golden_count;
+integer duplicate_pair_count;
+integer overflow_event_count;
 
 //////////////////////////////////////////////////
 // GOLDEN STORAGE
@@ -90,7 +97,8 @@ md_top #(
     .pipe_valid_out(pipe_valid),
     .force_out_bus(force_out_bus),
     .out_i_bus(out_i_bus),
-    .out_j_bus(out_j_bus)
+    .out_j_bus(out_j_bus),
+    .overflow_out(overflow_bus)
 );
 
 //////////////////////////////////////////////////
@@ -128,7 +136,6 @@ end
 
 //////////////////////////////////////////////////
 // LOAD GOLDEN FILE
-// format per line: i j force
 //////////////////////////////////////////////////
 
 initial begin
@@ -152,8 +159,6 @@ initial begin
     load_r = 3;
     while ((golden_idx < TOTAL_PAIRS) && (load_r == 3)) begin
         load_r = $fscanf(golden_file, "%d %d %h\n", load_gi, load_gj, load_gf);
-        // if your file uses commas instead, use this:
-        // load_r = $fscanf(golden_file, "%d, %d, %h\n", load_gi, load_gj, load_gf);
 
         if (load_r == 3) begin
             golden_i[golden_idx]     = load_gi;
@@ -190,6 +195,25 @@ always @(posedge clk) begin
 end
 
 //////////////////////////////////////////////////
+// OVERFLOW MONITOR
+//////////////////////////////////////////////////
+
+always @(posedge clk) begin
+    if (!rst) begin
+        for (lane = 0; lane < NUM_PIPELINES; lane = lane + 1) begin
+            if (pipe_valid[lane] && overflow_bus[lane]) begin
+                overflow_event_count = overflow_event_count + 1;
+                $display("[OVERFLOW] cycle=%0d lane=%0d pair=(%0d,%0d)",
+                         cycle_count,
+                         lane,
+                         out_i_bus[lane*IDX_WIDTH +: IDX_WIDTH],
+                         out_j_bus[lane*IDX_WIDTH +: IDX_WIDTH]);
+            end
+        end
+    end
+end
+
+//////////////////////////////////////////////////
 // GOLDEN CHECKER
 //////////////////////////////////////////////////
 
@@ -211,10 +235,12 @@ always @(posedge clk) begin
                 end
 
                 if (match_idx == -1) begin
+                    missing_golden_count = missing_golden_count + 1;
                     $display("[ERROR] No golden entry found for pair (%0d,%0d)",
                              obs_i, obs_j);
                 end else begin
                     if (golden_seen[match_idx]) begin
+                        duplicate_pair_count = duplicate_pair_count + 1;
                         $display("[ERROR] Pair (%0d,%0d) already checked once",
                                  obs_i, obs_j);
                     end else begin
@@ -223,12 +249,14 @@ always @(posedge clk) begin
                     end
 
                     if (dut_force !== golden_force[match_idx]) begin
-                        $display("[MISMATCH] pair=(%0d,%0d) lane=%0d expected=0x%h got=0x%h",
-                                 obs_i, obs_j, lane,
+                        mismatch_count = mismatch_count + 1;
+                        $display("[MISMATCH] pair=(%0d,%0d) lane=%0d overflow=%b expected=0x%h got=0x%h",
+                                 obs_i, obs_j, lane, overflow_bus[lane],
                                  golden_force[match_idx], dut_force);
                     end else begin
-                        $display("[PASS] pair=(%0d,%0d) lane=%0d force=0x%h",
-                                 obs_i, obs_j, lane, dut_force);
+                        pass_count = pass_count + 1;
+                        $display("[PASS] pair=(%0d,%0d) lane=%0d overflow=%b force=0x%h",
+                                 obs_i, obs_j, lane, overflow_bus[lane], dut_force);
                     end
                 end
             end
@@ -241,10 +269,15 @@ end
 //////////////////////////////////////////////////
 
 initial begin
-    rst           = 1;
-    start         = 0;
-    cycle_count   = 0;
-    timeout_count = 0;
+    rst                  = 1;
+    start                = 0;
+    cycle_count          = 0;
+    timeout_count        = 0;
+    pass_count           = 0;
+    mismatch_count       = 0;
+    missing_golden_count = 0;
+    duplicate_pair_count = 0;
+    overflow_event_count = 0;
 
     $display("[TB] Cycle %0d: rst=1 start=%b done=%b", cycle_count, start, done);
 
@@ -279,6 +312,11 @@ initial begin
     $display("Throughput (pairs/cycle) = %f",
              total_pairs * 1.0 / total_cycles);
     $display("Done                     = %b", done);
+    $display("Pass count               = %0d", pass_count);
+    $display("Mismatch count           = %0d", mismatch_count);
+    $display("Missing golden count     = %0d", missing_golden_count);
+    $display("Duplicate pair count     = %0d", duplicate_pair_count);
+    $display("Overflow events          = %0d", overflow_event_count);
     $display("=======================================");
 
     if (timeout_count >= 1000) begin
@@ -290,6 +328,11 @@ initial begin
         $display("*** WARNING: Only %0d/%0d pairs checked ***",
                  total_pairs_checked, total_pairs);
     end
+
+    if (mismatch_count == 0 && missing_golden_count == 0 && duplicate_pair_count == 0)
+        $display("*** TEST PASSED ***");
+    else
+        $display("*** TEST FAILED ***");
 
     #20;
     $finish;

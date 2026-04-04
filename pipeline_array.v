@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 module pipeline_array #(
     parameter NUM_PIPELINES = 4,
     parameter WIDTH = 32,
@@ -16,7 +18,8 @@ module pipeline_array #(
     output [NUM_PIPELINES-1:0]           valid_out,
     output [NUM_PIPELINES*WIDTH-1:0]     force_out,
     output [NUM_PIPELINES*IDX_WIDTH-1:0] out_i_bus,
-    output [NUM_PIPELINES*IDX_WIDTH-1:0] out_j_bus
+    output [NUM_PIPELINES*IDX_WIDTH-1:0] out_j_bus,
+    output [NUM_PIPELINES-1:0]           overflow_out
 );
 
 genvar p;
@@ -38,7 +41,8 @@ generate
             .valid_out(valid_out[p]),
             .force_out(force_out[p*WIDTH +: WIDTH]),
             .i_out(out_i_bus[p*IDX_WIDTH +: IDX_WIDTH]),
-            .j_out(out_j_bus[p*IDX_WIDTH +: IDX_WIDTH])
+            .j_out(out_j_bus[p*IDX_WIDTH +: IDX_WIDTH]),
+            .overflow_out(overflow_out[p])
         );
     end
 endgenerate
